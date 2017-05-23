@@ -27,6 +27,25 @@
 
             if typeof a.conf.edgeClick is 'function'
                 a.conf.edgeClick(edge)
+
+            # ZW: Inserting modifications from causal-discovery
+            # NOTE: Display evidence when edge is clicked
+            edgeID = edge.getProperties().edgeID
+            idx = findRowIndex "results", edgeID
+            row = $('#results tr').eq(idx)[0]
+            evidence = EDGES[$(row).data('uniqueid')]["evidence"]
+            console.log "edge: #{edgeID}"
+            console.log "evidence: #{evidence}"
+            # ZW: Caching jQuery calls
+            $dialog = $('#dialog-message')
+            $window = $(window)
+            $dialog.empty()
+                .append evidence
+            $dialog.dialog
+                width: $window.width() * 2 / 3
+                height: $window.height() * 2 / 3
+            # End display evidence
+
             if edge._state != "hidden"
                 edge._state = do ->
                     return "active" if edge._state is "selected"
@@ -35,6 +54,36 @@
 
         edgeMouseOver: (d) ->
             edge = d.self
+
+            # ZW: Inserting modifications
+            edgeID = edge.getProperties().edgeID
+            trueEdge = EDGES[edgeID]
+            idx = findRowIndex "results", edgeID
+            row = $('#results tr').eq(idx)
+            # Scroll to row
+            row.get(0).scrollIntoView()
+            # Highlight edge
+            row.addClass "hoverlike"
+            # Handle nodes
+            srcID = trueEdge.source.id
+            node0 = a._nodes[srcID]
+            if node0._state != "hidden"
+                if node0._state != "selected"
+                    node0._state = "highlighted"
+                    node0.setStyles()
+
+            destID = trueEdge.destination.id
+            node1 = a._nodes[destID]
+            if node1._state != "hidden"
+                if node1._state != "selected"
+                    node1._state = "highlighted"
+                    node1.setStyles()
+
+            $("#text-#{srcID}").css "display", "block"
+            $("#text-#{destID}").css "display", "block"
+
+            # End modifications
+
             if edge._state != "hidden"
                 if edge._state != "selected"
                     edge._state = "highlighted"
@@ -42,6 +91,34 @@
 
         edgeMouseOut: (d) ->
             edge = d.self
+
+            # ZW: Inserting modifications
+            edgeID = edge.getProperties().edgeID
+            trueEdge = EDGES[edgeID]
+            idx = findRowIndex "results", edgeID
+            row = $('#results tr').eq(idx)
+            # Remove edge focus
+            row.removeClass "hoverlike"
+            # Handle nodes
+            srcID = trueEdge.source.id
+            node0 = a._nodes[srcID]
+            if node0._state != "hidden"
+                if node0._state != "selected"
+                    node0._state = "active"
+                    node0.setStyles()
+
+            destID = trueEdge.destination.id
+            node1 = a._nodes[destID]
+            if node1._state != "hidden"
+                if node1._state != "selected"
+                    node1._state = "active"
+                    node1.setStyles()
+
+            $("#text-#{srcID}").css "display", "none"
+            $("#text-#{destID}").css "display", "none"
+
+            # End modifications
+
             if edge._state != "hidden"
                 if edge._state != "selected"
                     edge._state = "active"
@@ -93,7 +170,7 @@
                     @_zoomBehavior.scaleExtent extent
                                   .on "zoom", (d) ->
                                     a = Alchemy::getInst this
-                                    a.vis.attr("transform", "translate(#{ d3.event.translate }) 
+                                    a.vis.attr("transform", "translate(#{ d3.event.translate })
                                                               scale(#{ d3.event.scale })" )
         clickZoom:  (direction) ->
                         [x, y, scale] = a.vis
