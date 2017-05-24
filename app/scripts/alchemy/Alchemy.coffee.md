@@ -42,7 +42,7 @@ title: Anotated Source
                 DrawNodes: DrawNodes  @
                 EdgeUtils: @EdgeUtils @
                 NodeUtils: @NodeUtils @
-            
+
             @controlDash = @controlDash @
             @stats = @stats @
 
@@ -97,12 +97,13 @@ title: Anotated Source
         begin: (userConf) ->
             # overide configuration with user inputs
             conf = @setConf userConf
+            # ZW: Moving up to match causal-discovery source... Does something?
+            Alchemy::instances.push @
             switch typeof @conf.dataSource
                 when 'string' then d3.json @a.conf.dataSource, @a.startGraph
                 when 'object' then @a.startGraph @a.conf.dataSource
-            
+
             @plugins.init()
-            Alchemy::instances.push @
 
             @
 

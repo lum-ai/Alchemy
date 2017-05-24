@@ -30,11 +30,11 @@
 
             # ZW: Inserting modifications from causal-discovery
             # NOTE: Display evidence when edge is clicked
-            edgeID = edge.getProperties().edgeID
-            idx = findRowIndex "results", edgeID
+            edgeId = edge.getProperties().edgeId
+            idx = findRowIndex "results", edgeId
             row = $('#results tr').eq(idx)[0]
             evidence = EDGES[$(row).data('uniqueid')]["evidence"]
-            console.log "edge: #{edgeID}"
+            console.log "edge: #{edgeId}"
             console.log "evidence: #{evidence}"
             # ZW: Caching jQuery calls
             $dialog = $('#dialog-message')
@@ -56,9 +56,9 @@
             edge = d.self
 
             # ZW: Inserting modifications
-            edgeID = edge.getProperties().edgeID
-            trueEdge = EDGES[edgeID]
-            idx = findRowIndex "results", edgeID
+            edgeId = edge.getProperties().edgeId
+            trueEdge = EDGES[edgeId]
+            idx = findRowIndex "results", edgeId
             row = $('#results tr').eq(idx)
             # Scroll to row
             row.get(0).scrollIntoView()
@@ -93,9 +93,9 @@
             edge = d.self
 
             # ZW: Inserting modifications
-            edgeID = edge.getProperties().edgeID
-            trueEdge = EDGES[edgeID]
-            idx = findRowIndex "results", edgeID
+            edgeId = edge.getProperties().edgeId
+            trueEdge = EDGES[edgeId]
+            idx = findRowIndex "results", edgeId
             row = $('#results tr').eq(idx)
             # Remove edge focus
             row.removeClass "hoverlike"

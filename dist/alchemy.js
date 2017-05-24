@@ -65,6 +65,7 @@
     Alchemy.prototype.begin = function(userConf) {
       var conf;
       conf = this.setConf(userConf);
+      Alchemy.prototype.instances.push(this);
       switch (typeof this.conf.dataSource) {
         case 'string':
           d3.json(this.a.conf.dataSource, this.a.startGraph);
@@ -73,7 +74,6 @@
           this.a.startGraph(this.a.conf.dataSource);
       }
       this.plugins.init();
-      Alchemy.prototype.instances.push(this);
       return this;
     };
 
@@ -852,7 +852,7 @@
     a = instance;
     return {
       edgeClick: function(d) {
-        var $dialog, $window, edge, edgeID, evidence, idx, row;
+        var $dialog, $window, edge, edgeId, evidence, idx, row;
         if (d3.event.defaultPrevented) {
           return;
         }
@@ -861,11 +861,11 @@
         if (typeof a.conf.edgeClick === 'function') {
           a.conf.edgeClick(edge);
         }
-        edgeID = edge.getProperties().edgeID;
-        idx = findRowIndex("results", edgeID);
+        edgeId = edge.getProperties().edgeId;
+        idx = findRowIndex("results", edgeId);
         row = $('#results tr').eq(idx)[0];
         evidence = EDGES[$(row).data('uniqueid')]["evidence"];
-        console.log("edge: " + edgeID);
+        console.log("edge: " + edgeId);
         console.log("evidence: " + evidence);
         $dialog = $('#dialog-message');
         $window = $(window);
@@ -885,11 +885,11 @@
         }
       },
       edgeMouseOver: function(d) {
-        var destID, edge, edgeID, idx, node0, node1, row, srcID, trueEdge;
+        var destID, edge, edgeId, idx, node0, node1, row, srcID, trueEdge;
         edge = d.self;
-        edgeID = edge.getProperties().edgeID;
-        trueEdge = EDGES[edgeID];
-        idx = findRowIndex("results", edgeID);
+        edgeId = edge.getProperties().edgeId;
+        trueEdge = EDGES[edgeId];
+        idx = findRowIndex("results", edgeId);
         row = $('#results tr').eq(idx);
         row.get(0).scrollIntoView();
         row.addClass("hoverlike");
@@ -919,11 +919,11 @@
         }
       },
       edgeMouseOut: function(d) {
-        var destID, edge, edgeID, idx, node0, node1, row, srcID, trueEdge;
+        var destID, edge, edgeId, idx, node0, node1, row, srcID, trueEdge;
         edge = d.self;
-        edgeID = edge.getProperties().edgeID;
-        trueEdge = EDGES[edgeID];
-        idx = findRowIndex("results", edgeID);
+        edgeId = edge.getProperties().edgeId;
+        trueEdge = EDGES[edgeId];
+        idx = findRowIndex("results", edgeId);
         row = $('#results tr').eq(idx);
         row.removeClass("hoverlike");
         srcID = trueEdge.source.id;
