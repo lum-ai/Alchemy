@@ -10,7 +10,7 @@ module.exports = (grunt) ->
   require("time-grunt") grunt
   pkg = grunt.file.readJSON('./package.json')
 
-  # set up sauce labs credentials 
+  # set up sauce labs credentials
   if grunt.file.isFile('./sauce.yml')
     s3Config = grunt.file.readYAML('./sauce.yml')
     sauce_user_name = s3Config.SAUCE_USERNAME
@@ -83,7 +83,7 @@ module.exports = (grunt) ->
 
       coffeeTest:
         files: ["test/spec/{,*/}*.{coffee,litcoffee,coffee.md}"]
-        tasks: ["coffee:test", "test:watch"], 
+        tasks: ["coffee:test", "test:watch"],
 
       gruntfile:
         files: ["Gruntfile.coffee"]
@@ -136,7 +136,7 @@ module.exports = (grunt) ->
           src: [".tmp", "<%= yeoman.dist %>/*", "!<%= yeoman.dist %>/.git*"]
         ]
 
-      server: 
+      server:
         files: [
           dot: true
           src: ".tmp"
@@ -206,7 +206,7 @@ module.exports = (grunt) ->
             # all of the core, alchemy.js files
             ".tmp/scripts/alchemy.js": [".tmp/scripts/alchemy/Alchemy.{coffee,litcoffee,coffee.md}"
                                         ".tmp/scripts/alchemy/{,*/}*.{coffee,litcoffee,coffee.md}"]
-      dev:              
+      dev:
         options:
             bare: false
             sourceMap: true
@@ -396,7 +396,7 @@ module.exports = (grunt) ->
             dest: '.tmp/s3/alchemy.min.js'
             src: ['<%= yeoman.dist %>/scripts/vendor.js'
                   '<%= yeoman.dist %>/alchemy.min.js']
-          , 
+          ,
             dest: '.tmp/s3/alchemy.js'
             src: ['<%= yeoman.dist %>/scripts/vendor.js'
                   '<%= yeoman.dist %>/alchemy.js']
@@ -460,7 +460,7 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
           src: ["*.{ico,png,txt}", "images/{,*/}*.webp", "{,*/}*.html", "styles/fonts/{,*/}*.*", "sample_data/{,*/}*.json"]
           ]
-      
+
       s3:
         files: [
           expand: true
@@ -550,8 +550,8 @@ module.exports = (grunt) ->
                                "uglify:buildAlchemy"]
 
   releaseFlag = grunt.option('release')
-  pullRequest = grunt.option('pr') 
-  travis = grunt.option('travis')                         
+  pullRequest = grunt.option('pr')
+  travis = grunt.option('travis')
   grunt.registerTask "default",
     # release alchemy
     if releaseFlag
@@ -577,4 +577,5 @@ module.exports = (grunt) ->
     # test with sauce and build scripts
     else
       ["test:dist",
-       "build"]
+       "build",
+       "string-replace"]

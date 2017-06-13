@@ -1,12 +1,15 @@
 {
   "name": "alchemyjs",
-  "version": "0.4.1",
+  "version": "0.4.1-causal-discovery",
+  "main": "./dist/alchemy.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/graphalchemist/alchemy.git"
   },
   "homepage": "http://graphalchemist.github.io/Alchemy/",
-  "dependencies": {},
+  "dependencies": {
+    "d3": "^4.9.1"
+  },
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "grunt": "~0.4.1",

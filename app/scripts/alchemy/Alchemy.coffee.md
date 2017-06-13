@@ -127,8 +127,16 @@ title: Anotated Source
             instNumber = parseInt d3.select(svg).attr("alchInst")
             Alchemy::instances[instNumber]
 
-    root = exports ? this
-    root.Alchemy = Alchemy
+    # ZW: Fixed UMD export
+    if typeof exports is 'object'
+        module.exports = Alchemy
+    else if typeof define is 'function' and define.amd
+        define([], () -> Alchemy)
+    else
+        window.Alchemy = Alchemy
 
-    #Backwards compatible alchemy.begin() for single instances
-    root.alchemy = begin: (config)-> root.alchemy = new Alchemy(config)
+    # root = exports ? this
+    # root.Alchemy = Alchemy
+
+    # #Backwards compatible alchemy.begin() for single instances
+    # root.alchemy = begin: (config)-> root.alchemy = new Alchemy(config)

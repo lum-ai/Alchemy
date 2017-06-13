@@ -1,6 +1,6 @@
 (function() {
   "Alchemy.js is a graph drawing application for the web.\nCopyright (C) 2014  GraphAlchemist, Inc.\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU Affero General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU Affero General Public License for more details.\n\nYou should have received a copy of the GNU Affero General Public License\nalong with this program.  If not, see <http://www.gnu.org/licenses/>.\nlets";
-  var Alchemy, Clustering, DrawEdge, DrawEdges, DrawNode, DrawNodes, Editor, EditorInteractions, EditorUtils, Layout, root, warnings,
+  var Alchemy, Clustering, DrawEdge, DrawEdges, DrawNode, DrawNodes, Editor, EditorInteractions, EditorUtils, Layout, warnings,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -10,7 +10,7 @@
         userConf = null;
       }
       this.a = this;
-      this.version = "#VERSION#";
+      this.version = "0.4.1-causal-discovery";
       this.get = new this.Get(this);
       this.remove = new this.Remove(this);
       this.create = new this.Create(this);
@@ -110,15 +110,15 @@
 
   })();
 
-  root = typeof exports !== "undefined" && exports !== null ? exports : this;
-
-  root.Alchemy = Alchemy;
-
-  root.alchemy = {
-    begin: function(config) {
-      return root.alchemy = new Alchemy(config);
-    }
-  };
+  if (typeof exports === 'object') {
+    module.exports = Alchemy;
+  } else if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return Alchemy;
+    });
+  } else {
+    window.Alchemy = Alchemy;
+  }
 
   Alchemy.prototype.Create = (function() {
     function Create(instance) {
