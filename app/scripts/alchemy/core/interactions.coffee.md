@@ -60,8 +60,8 @@
             trueEdge = EDGES[edgeId]
             idx = findRowIndex "results", edgeId
             row = $('#results tr').eq(idx)
-            # Scroll to row
-            row.get(0).scrollIntoView()
+            # Scroll to row (disabled for now)
+            # row.get(0).scrollIntoView()
             # Highlight edge
             row.addClass "hoverlike"
             # Handle nodes

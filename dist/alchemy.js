@@ -891,7 +891,6 @@
         trueEdge = EDGES[edgeId];
         idx = findRowIndex("results", edgeId);
         row = $('#results tr').eq(idx);
-        row.get(0).scrollIntoView();
         row.addClass("hoverlike");
         srcID = trueEdge.source.id;
         node0 = a._nodes[srcID];
