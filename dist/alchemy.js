@@ -852,7 +852,7 @@
     a = instance;
     return {
       edgeClick: function(d) {
-        var $dialog, $window, edge, edgeId, evidence, idx, row;
+        var edge;
         if (d3.event.defaultPrevented) {
           return;
         }
@@ -861,19 +861,6 @@
         if (typeof a.conf.edgeClick === 'function') {
           a.conf.edgeClick(edge);
         }
-        edgeId = edge.getProperties().edgeId;
-        idx = findRowIndex("results", edgeId);
-        row = $('#results tr').eq(idx)[0];
-        evidence = EDGES[$(row).data('uniqueid')]["evidence"];
-        console.log("edge: " + edgeId);
-        console.log("evidence: " + evidence);
-        $dialog = $('#dialog-message');
-        $window = $(window);
-        $dialog.empty().append(evidence);
-        $dialog.dialog({
-          width: $window.width() * 2 / 3,
-          height: $window.height() * 2 / 3
-        });
         if (edge._state !== "hidden") {
           edge._state = (function() {
             if (edge._state === "selected") {
@@ -885,31 +872,11 @@
         }
       },
       edgeMouseOver: function(d) {
-        var destID, edge, edgeId, idx, node0, node1, row, srcID, trueEdge;
+        var edge;
         edge = d.self;
-        edgeId = edge.getProperties().edgeId;
-        trueEdge = EDGES[edgeId];
-        idx = findRowIndex("results", edgeId);
-        row = $('#results tr').eq(idx);
-        row.addClass("hoverlike");
-        srcID = trueEdge.source.id;
-        node0 = a._nodes[srcID];
-        if (node0._state !== "hidden") {
-          if (node0._state !== "selected") {
-            node0._state = "highlighted";
-            node0.setStyles();
-          }
+        if (typeof a.conf.edgeMouseOver === 'function') {
+          a.conf.edgeMouseOver(edge);
         }
-        destID = trueEdge.destination.id;
-        node1 = a._nodes[destID];
-        if (node1._state !== "hidden") {
-          if (node1._state !== "selected") {
-            node1._state = "highlighted";
-            node1.setStyles();
-          }
-        }
-        $("#text-" + srcID).css("display", "block");
-        $("#text-" + destID).css("display", "block");
         if (edge._state !== "hidden") {
           if (edge._state !== "selected") {
             edge._state = "highlighted";
@@ -918,31 +885,11 @@
         }
       },
       edgeMouseOut: function(d) {
-        var destID, edge, edgeId, idx, node0, node1, row, srcID, trueEdge;
+        var edge;
         edge = d.self;
-        edgeId = edge.getProperties().edgeId;
-        trueEdge = EDGES[edgeId];
-        idx = findRowIndex("results", edgeId);
-        row = $('#results tr').eq(idx);
-        row.removeClass("hoverlike");
-        srcID = trueEdge.source.id;
-        node0 = a._nodes[srcID];
-        if (node0._state !== "hidden") {
-          if (node0._state !== "selected") {
-            node0._state = "active";
-            node0.setStyles();
-          }
+        if (typeof a.conf.edgeMouseOut === 'function') {
+          a.conf.edgeMouseOut(edge);
         }
-        destID = trueEdge.destination.id;
-        node1 = a._nodes[destID];
-        if (node1._state !== "hidden") {
-          if (node1._state !== "selected") {
-            node1._state = "active";
-            node1.setStyles();
-          }
-        }
-        $("#text-" + srcID).css("display", "none");
-        $("#text-" + destID).css("display", "none");
         if (edge._state !== "hidden") {
           if (edge._state !== "selected") {
             edge._state = "active";
@@ -1612,6 +1559,8 @@
     directedEdges: false,
     edgeArrowSize: 5,
     edgeClick: null,
+    edgeMouseOver: null,
+    edgeMouseOut: null,
     search: false,
     searchMethod: "contains",
     backgroundColour: "#000000",

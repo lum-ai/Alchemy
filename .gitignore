@@ -13,3 +13,4 @@ site/dist
 archive
 s3.yml
 sauce.yml
+*.sublime*

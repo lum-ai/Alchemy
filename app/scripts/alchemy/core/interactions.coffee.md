@@ -28,23 +28,25 @@
             if typeof a.conf.edgeClick is 'function'
                 a.conf.edgeClick(edge)
 
-            # ZW: Inserting modifications from causal-discovery
-            # NOTE: Display evidence when edge is clicked
-            edgeId = edge.getProperties().edgeId
-            idx = findRowIndex "results", edgeId
-            row = $('#results tr').eq(idx)[0]
-            evidence = EDGES[$(row).data('uniqueid')]["evidence"]
-            console.log "edge: #{edgeId}"
-            console.log "evidence: #{evidence}"
-            # ZW: Caching jQuery calls
-            $dialog = $('#dialog-message')
-            $window = $(window)
-            $dialog.empty()
-                .append evidence
-            $dialog.dialog
-                width: $window.width() * 2 / 3
-                height: $window.height() * 2 / 3
-            # End display evidence
+            # ZW: Moved to BMGF sources, July 2017
+
+            # # ZW: Inserting modifications from causal-discovery
+            # # NOTE: Display evidence when edge is clicked
+            # edgeId = edge.getProperties().edgeId
+            # idx = findRowIndex "results", edgeId
+            # row = $('#results tr').eq(idx)[0]
+            # evidence = EDGES[$(row).data('uniqueid')]["evidence"]
+            # console.log "edge: #{edgeId}"
+            # console.log "evidence: #{evidence}"
+            # # ZW: Caching jQuery calls
+            # $dialog = $('#dialog-message')
+            # $window = $(window)
+            # $dialog.empty()
+            #     .append evidence
+            # $dialog.dialog
+            #     width: $window.width() * 2 / 3
+            #     height: $window.height() * 2 / 3
+            # # End display evidence
 
             if edge._state != "hidden"
                 edge._state = do ->
@@ -55,34 +57,39 @@
         edgeMouseOver: (d) ->
             edge = d.self
 
-            # ZW: Inserting modifications
-            edgeId = edge.getProperties().edgeId
-            trueEdge = EDGES[edgeId]
-            idx = findRowIndex "results", edgeId
-            row = $('#results tr').eq(idx)
-            # Scroll to row (disabled for now)
-            # row.get(0).scrollIntoView()
-            # Highlight edge
-            row.addClass "hoverlike"
-            # Handle nodes
-            srcID = trueEdge.source.id
-            node0 = a._nodes[srcID]
-            if node0._state != "hidden"
-                if node0._state != "selected"
-                    node0._state = "highlighted"
-                    node0.setStyles()
+            if typeof a.conf.edgeMouseOver is 'function'
+                a.conf.edgeMouseOver(edge)
 
-            destID = trueEdge.destination.id
-            node1 = a._nodes[destID]
-            if node1._state != "hidden"
-                if node1._state != "selected"
-                    node1._state = "highlighted"
-                    node1.setStyles()
+            # ZW: Moved to BMGF sources, July 2017
 
-            $("#text-#{srcID}").css "display", "block"
-            $("#text-#{destID}").css "display", "block"
+            # # ZW: Inserting modifications
+            # edgeId = edge.getProperties().edgeId
+            # trueEdge = EDGES[edgeId]
+            # idx = findRowIndex "results", edgeId
+            # row = $('#results tr').eq(idx)
+            # # Scroll to row (disabled for now)
+            # # row.get(0).scrollIntoView()
+            # # Highlight edge
+            # row.addClass "hoverlike"
+            # # Handle nodes
+            # srcID = trueEdge.source.id
+            # node0 = a._nodes[srcID]
+            # if node0._state != "hidden"
+            #     if node0._state != "selected"
+            #         node0._state = "highlighted"
+            #         node0.setStyles()
 
-            # End modifications
+            # destID = trueEdge.destination.id
+            # node1 = a._nodes[destID]
+            # if node1._state != "hidden"
+            #     if node1._state != "selected"
+            #         node1._state = "highlighted"
+            #         node1.setStyles()
+
+            # $("#text-#{srcID}").css "display", "block"
+            # $("#text-#{destID}").css "display", "block"
+
+            # # End modifications
 
             if edge._state != "hidden"
                 if edge._state != "selected"
@@ -92,32 +99,37 @@
         edgeMouseOut: (d) ->
             edge = d.self
 
-            # ZW: Inserting modifications
-            edgeId = edge.getProperties().edgeId
-            trueEdge = EDGES[edgeId]
-            idx = findRowIndex "results", edgeId
-            row = $('#results tr').eq(idx)
-            # Remove edge focus
-            row.removeClass "hoverlike"
-            # Handle nodes
-            srcID = trueEdge.source.id
-            node0 = a._nodes[srcID]
-            if node0._state != "hidden"
-                if node0._state != "selected"
-                    node0._state = "active"
-                    node0.setStyles()
+            if typeof a.conf.edgeMouseOut is 'function'
+                a.conf.edgeMouseOut(edge)
 
-            destID = trueEdge.destination.id
-            node1 = a._nodes[destID]
-            if node1._state != "hidden"
-                if node1._state != "selected"
-                    node1._state = "active"
-                    node1.setStyles()
+            # ZW: Moved to BMGF sources, July 2017
 
-            $("#text-#{srcID}").css "display", "none"
-            $("#text-#{destID}").css "display", "none"
+            # # ZW: Inserting modifications
+            # edgeId = edge.getProperties().edgeId
+            # trueEdge = EDGES[edgeId]
+            # idx = findRowIndex "results", edgeId
+            # row = $('#results tr').eq(idx)
+            # # Remove edge focus
+            # row.removeClass "hoverlike"
+            # # Handle nodes
+            # srcID = trueEdge.source.id
+            # node0 = a._nodes[srcID]
+            # if node0._state != "hidden"
+            #     if node0._state != "selected"
+            #         node0._state = "active"
+            #         node0.setStyles()
 
-            # End modifications
+            # destID = trueEdge.destination.id
+            # node1 = a._nodes[destID]
+            # if node1._state != "hidden"
+            #     if node1._state != "selected"
+            #         node1._state = "active"
+            #         node1.setStyles()
+
+            # $("#text-#{srcID}").css "display", "none"
+            # $("#text-#{destID}").css "display", "none"
+
+            # # End modifications
 
             if edge._state != "hidden"
                 if edge._state != "selected"

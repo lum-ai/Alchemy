@@ -26,7 +26,7 @@
         graphHeight: ->
             if d3.select(@divSelector).node().parentElement.nodeName is "BODY"
                 window.innerHeight
-            else 
+            else
                 d3.select(@divSelector).node().parentElement.clientHeight
         alpha: 0.5
         collisionDetection: true
@@ -86,7 +86,7 @@
                 "highlighted":
                     "color" : "#EEEEFF"
                 "hidden":
-                    "color": "none" 
+                    "color": "none"
                     "borderColor": "none"
 
         nodeColour: null # WILL BE DEPRECATED IN 1.0
@@ -120,6 +120,8 @@
         directedEdges: false
         edgeArrowSize: 5
         edgeClick: null
+        edgeMouseOver: null
+        edgeMouseOut: null
 
         # Search
         search: false
